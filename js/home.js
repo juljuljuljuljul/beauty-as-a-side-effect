@@ -28,15 +28,17 @@
     await Promise.all(workers);
   }
 
+  // Returns the parsed manifest, the string 'missing' when the server said
+  // 404 (piece genuinely not published), or null on a transient failure
+  // (network drop, or the HTML landing a beat before the manifest during a
+  // deploy). Retries a few times with backoff before giving up.
   async function fetchManifest(piece) {
-    // A single miss shouldn't leave the thumbnail dead forever — during a
-    // deploy the HTML can land a beat before the manifest, and phones drop
-    // requests. Retry a few times with a short backoff before giving up.
-    const delays = [400, 1000, 2500];
+    const delays = [400, 1000, 2500, 5000];
     for (let attempt = 0; ; attempt++) {
       try {
         const res = await fetch(`${piece}/manifest.json`, { cache: 'no-store' });
         if (res.ok) return res.json();
+        if (res.status === 404) return 'missing';
       } catch (e) {
         // network hiccup — fall through to the retry
       }
@@ -47,23 +49,30 @@
 
   async function setUpThumb(link) {
     const piece = link.dataset.piece;
-    try {
-      const manifest = await fetchManifest(piece);
-      if (!manifest) return;
+    const manifest = await fetchManifest(piece);
 
-      // Prefer the current viewport's own frames, but a piece that only has
-      // the other device's frames exported so far shouldn't sit disabled —
-      // fall back to whichever set actually exists.
-      const preferred = isMobile() ? 'mobile' : 'desktop';
-      const fallback = isMobile() ? 'desktop' : 'mobile';
-      const folder = (manifest[preferred] || []).length ? preferred : fallback;
-      const files = manifest[folder] || [];
-      if (files.length === 0) return;
+    // Genuinely not published yet — leave the thumbnail dim and unclickable.
+    if (manifest === 'missing') return;
 
+    // Couldn't reach the manifest, but the link itself is still valid and
+    // the piece page runs its own loader — enable it rather than stranding
+    // the visitor on a dead thumbnail. Just skip the preload.
+    if (!manifest) {
       link.classList.add('ready');
+      return;
+    }
+
+    // Prefer the current viewport's own frames, but a piece that only has
+    // the other device's frames exported so far shouldn't sit disabled —
+    // fall back to whichever set actually exists.
+    const preferred = isMobile() ? 'mobile' : 'desktop';
+    const fallback = isMobile() ? 'desktop' : 'mobile';
+    const folder = (manifest[preferred] || []).length ? preferred : fallback;
+    const files = manifest[folder] || [];
+
+    link.classList.add('ready');
+    if (files.length) {
       preloadFrames(piece, folder, files); // fire and forget, quietly warms the cache
-    } catch (e) {
-      // piece not published yet — leave the thumbnail dim and unclickable
     }
   }
 

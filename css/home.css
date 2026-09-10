@@ -41,15 +41,14 @@ html, body {
   }
 }
 
-/* The hint at the top and the exhibition credit at the bottom — in normal
-   flow so they never overlap a thumbnail while scrolling on mobile.
-   pointer-events disabled so they can't block a thumb; re-enabled on the
-   link itself.
+/* The title + hint at the top and the exhibition credit at the bottom —
+   in normal flow so they never overlap a thumbnail while scrolling on
+   mobile. pointer-events disabled so they can't block a thumb; re-enabled
+   on the link itself.
 
    Type matches the piece pages' "LOADING 0%" label (#loader-label in
-   style.css): same font stack, 12px, 0.08em tracking, uppercase, and the
-   same dim white. */
-.page-hint,
+   style.css): same font stack, 12px, 0.08em tracking, uppercase. */
+.page-head,
 .page-credit {
   flex: none;
   z-index: 2;
@@ -59,12 +58,27 @@ html, body {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   text-align: center;
-  color: rgba(255, 255, 255, 0.6);
+}
+
+.page-head {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.page-title {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* The prompt underneath the title — deliberately fainter. */
+.page-hint {
+  color: rgba(255, 255, 255, 0.38);
 }
 
 .page-credit {
   max-width: min(92vw, 640px);
   line-height: 1.6;
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .page-credit a {
