@@ -181,6 +181,16 @@ html, body {
   transition: box-shadow 1.6s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
+/* On phones the thumbnails are much smaller, so the desktop blur radius
+   spreads the same light over a far wider area and reads as almost
+   nothing. Tighten the blur and lift the opacity so the bloom still hugs
+   the thumb. */
+@media (max-width: 767px) {
+  .thumb-img {
+    box-shadow: 0 0 78px -12px rgba(129, 255, 179, 0.62);
+  }
+}
+
 @media (hover: hover) and (pointer: fine) {
   .thumb-link.ready:hover .thumb-img {
     box-shadow: 0 0 175px -14px rgba(129, 255, 179, 0.75);

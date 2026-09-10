@@ -173,7 +173,7 @@ html, body {
 #scroll-hint {
   position: absolute;
   left: 50%;
-  bottom: 9%;
+  bottom: 34%;
   transform: translateX(-50%);
   z-index: 5;
   color: rgba(255, 255, 255, 0.5);
@@ -195,7 +195,7 @@ html, body {
 
 #scroll-hint svg {
   width: 22px;
-  height: 22px;
+  height: 44px;
   display: block;
 }
 
