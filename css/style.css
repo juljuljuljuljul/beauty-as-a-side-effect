@@ -99,31 +99,12 @@ html, body {
   transition: width 0.15s ease;
 }
 
-.loader-text {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 9px;
-  text-align: center;
-}
-
 #loader-label {
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
   font-size: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.6);
-}
-
-/* Reassurance line under the percentage — same face, a touch smaller and
-   dimmer, sentence case so a full phrase stays calm rather than shouty. */
-#loader-note {
-  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.32);
-  max-width: min(78vw, 300px);
 }
 
 .corner-btn {
@@ -186,15 +167,14 @@ html, body {
   }
 }
 
-/* Scroll hint: an elegant, gently bobbing "scroll down" cue centered on
-   screen. Hidden until the loader clears (JS adds .visible), and fades
-   away permanently the first time the user actually scrolls (JS adds
-   .gone). */
+/* Scroll hint: a small, elegant, gently bobbing "scroll down" cue. Hidden
+   until the loader clears (JS adds .visible), and fades away permanently
+   the first time the user actually scrolls (JS adds .gone). */
 #scroll-hint {
   position: absolute;
   left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  bottom: 9%;
+  transform: translateX(-50%);
   z-index: 5;
   color: rgba(255, 255, 255, 0.5);
   opacity: 0;
@@ -215,11 +195,11 @@ html, body {
 
 #scroll-hint svg {
   width: 22px;
-  height: 44px;
+  height: 22px;
   display: block;
 }
 
 @keyframes scroll-hint-bob {
-  0%, 100% { transform: translate(-50%, -50%) translateY(0); }
-  50% { transform: translate(-50%, -50%) translateY(9px); }
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(7px); }
 }
