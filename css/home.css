@@ -44,40 +44,39 @@ html, body {
 /* The hint at the top and the exhibition credit at the bottom — in normal
    flow so they never overlap a thumbnail while scrolling on mobile.
    pointer-events disabled so they can't block a thumb; re-enabled on the
-   link itself. */
+   link itself.
+
+   Type matches the piece pages' "LOADING 0%" label (#loader-label in
+   style.css): same font stack, 12px, 0.08em tracking, uppercase, and the
+   same dim white. */
 .page-hint,
 .page-credit {
   flex: none;
   z-index: 2;
   pointer-events: none;
-  color: rgba(129, 255, 179, 0.72);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  font-size: 12px;
   letter-spacing: 0.08em;
-  text-shadow: 0 0 24px rgba(129, 255, 179, 0.35);
-}
-
-.page-hint {
-  font-size: clamp(13px, 2.6vw, 16px);
+  text-transform: uppercase;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .page-credit {
   max-width: min(92vw, 640px);
-  font-size: clamp(11px, 2.4vw, 13px);
-  line-height: 1.5;
-  color: rgba(129, 255, 179, 0.55);
+  line-height: 1.6;
 }
 
 .page-credit a {
   pointer-events: auto;
-  color: rgba(129, 255, 179, 0.85);
+  color: rgba(255, 255, 255, 0.6);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .page-credit a:hover {
-    color: rgba(129, 255, 179, 1);
+    color: rgba(255, 255, 255, 0.9);
   }
 }
 

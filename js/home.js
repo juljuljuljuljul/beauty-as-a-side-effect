@@ -28,12 +28,28 @@
     await Promise.all(workers);
   }
 
+  async function fetchManifest(piece) {
+    // A single miss shouldn't leave the thumbnail dead forever — during a
+    // deploy the HTML can land a beat before the manifest, and phones drop
+    // requests. Retry a few times with a short backoff before giving up.
+    const delays = [400, 1000, 2500];
+    for (let attempt = 0; ; attempt++) {
+      try {
+        const res = await fetch(`${piece}/manifest.json`, { cache: 'no-store' });
+        if (res.ok) return res.json();
+      } catch (e) {
+        // network hiccup — fall through to the retry
+      }
+      if (attempt >= delays.length) return null;
+      await new Promise((r) => setTimeout(r, delays[attempt]));
+    }
+  }
+
   async function setUpThumb(link) {
     const piece = link.dataset.piece;
     try {
-      const res = await fetch(`${piece}/manifest.json`, { cache: 'no-store' });
-      if (!res.ok) return;
-      const manifest = await res.json();
+      const manifest = await fetchManifest(piece);
+      if (!manifest) return;
 
       // Prefer the current viewport's own frames, but a piece that only has
       // the other device's frames exported so far shouldn't sit disabled —
