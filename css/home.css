@@ -76,6 +76,9 @@ html, body {
 }
 
 .page-credit {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
   max-width: min(92vw, 640px);
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.6);
@@ -88,9 +91,22 @@ html, body {
   text-underline-offset: 2px;
 }
 
+/* Link out to the main portfolio — in the same neon green as the thumb glow. */
+.page-more {
+  color: rgba(129, 255, 179, 0.55);
+}
+
+.page-more a {
+  color: rgba(129, 255, 179, 0.9);
+}
+
 @media (hover: hover) and (pointer: fine) {
   .page-credit a:hover {
     color: rgba(255, 255, 255, 0.9);
+  }
+
+  .page-more a:hover {
+    color: rgba(129, 255, 179, 1);
   }
 }
 
