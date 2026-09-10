@@ -99,12 +99,31 @@ html, body {
   transition: width 0.15s ease;
 }
 
+.loader-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  text-align: center;
+}
+
 #loader-label {
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
   font-size: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.6);
+}
+
+/* Reassurance line under the percentage — same face, a touch smaller and
+   dimmer, sentence case so a full phrase stays calm rather than shouty. */
+#loader-note {
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.32);
+  max-width: min(78vw, 300px);
 }
 
 .corner-btn {
