@@ -119,7 +119,13 @@
   }
 
   function paint(img) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // No clearRect first: every frame is an opaque, full-bleed JPEG that
+    // completely covers the canvas, so drawing the new one straight over
+    // the old one is enough. Clearing meant that whenever a frame was
+    // requested a beat before its bitmap finished decoding — routine during
+    // a fast flick on a phone — the canvas showed the black page behind it
+    // for that beat. That flash is the scrolling "blackout". Without the
+    // clear, the previous frame simply stays put until the new one lands.
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
   }
 
