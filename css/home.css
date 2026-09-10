@@ -118,6 +118,35 @@ html, body {
   opacity: 1;
 }
 
+/* Not yet released — shown but dimmed right down, unclickable, with a
+   faint "revealed soon" label over it. Wins over .ready (JS skips these
+   anyway, but keep the styling defensive). */
+.thumb-link.coming-soon,
+.thumb-link.coming-soon.ready {
+  opacity: 1;
+  cursor: default;
+  pointer-events: none;
+}
+
+.thumb-link.coming-soon .thumb-img {
+  opacity: 0.16;
+  box-shadow: none;
+}
+
+.thumb-note {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.25);
+  pointer-events: none;
+}
+
 .thumb-link.ready:focus-visible .thumb {
   transform: scale(1.03);
 }

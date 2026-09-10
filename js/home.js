@@ -48,6 +48,9 @@
   }
 
   async function setUpThumb(link) {
+    // Deliberately held back — don't light it up even though its frames exist.
+    if (link.classList.contains('coming-soon')) return;
+
     const piece = link.dataset.piece;
     const manifest = await fetchManifest(piece);
 
